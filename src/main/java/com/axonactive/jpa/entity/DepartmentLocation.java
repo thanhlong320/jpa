@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -29,6 +30,7 @@ public class DepartmentLocation {
     @JoinColumn(name = "department_id")
     private Department department;
 
+    @NotNull
     @Column(nullable = false, columnDefinition = "varchar(100)")
     @Enumerated(EnumType.STRING)
     private Location location;

@@ -50,7 +50,7 @@ public class AssignmentServiceImpl implements AssignmentService {
         if (Objects.nonNull(employee) && Objects.nonNull(project)) {
             assignment.setEmployee(employee);
             assignment.setProject(project);
-            entityManager.merge(assignment);
+            entityManager.persist(assignment);
         }
         return assignmentMapper.AssignmentToAssignmentDto(assignment);
     }

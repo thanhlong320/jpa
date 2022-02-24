@@ -61,7 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDTO addEmployee(int departmentId, EmployeeRequest employeeRequest) {
         Employee employee = employeeMapper.EmployeeRequestToEmployee(employeeRequest);
         employee.setDepartment(departmentService.getDepartmentById(departmentId));
-        entityManager.merge(employee);
+        entityManager.persist(employee);
         return employeeMapper.EmployeeToEmployeeDto(employee);
     }
 

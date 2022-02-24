@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Getter
@@ -28,23 +29,31 @@ public class Employee {
     @Column(name = "id")
     private Integer id;
 
+    @NotNull
+    @Size(min = 2, max = 20)
     @Column(name = "first_name", nullable = false, columnDefinition = "varchar(20)")
     private String firstName;
 
-    @Column(name = "middle_name", nullable = false, columnDefinition = "varchar(20)")
     @NotNull
+    @Size(min = 2, max = 20)
+    @Column(name = "middle_name", nullable = false, columnDefinition = "varchar(20)")
     private String middleName;
 
+    @NotNull
+    @Size(min = 2, max = 20)
     @Column(name = "last_name", nullable = false, columnDefinition = "varchar(20)")
     private String lastName;
 
+    @NotNull
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
+    @NotNull
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @NotNull
     @Column(nullable = false)
     private double salary;
 

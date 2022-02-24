@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -23,9 +24,11 @@ public class Project {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     @Column(nullable = false, columnDefinition = "varchar(100)")
     private String name;
 
+    @NotNull
     @Column(nullable = false, columnDefinition = "varchar(100)")
     private String area;
 

@@ -3,10 +3,16 @@ package com.axonactive.jpa.service.impl;
 import com.axonactive.jpa.controller.request.DepartmentRequest;
 import com.axonactive.jpa.entity.Department;
 import com.axonactive.jpa.service.DepartmentService;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
@@ -20,12 +26,23 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department getDepartmentById(int id) {
-        return entityManager.find(Department.class, id);
+        Session session = entityManager.unwrap(org.hibernate.Session.class);
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Department> query = builder.createQuery(Department.class);
+        Root<Department> root = query.from(Department.class);
+        Predicate condition = builder.equal(root.get("id"), id);
+        query.select(root).where(condition);
+        return session.createQuery(query).getSingleResult();
     }
 
     @Override
     public List<Department> getAllDepartment() {
-        return entityManager.createQuery("from Department", Department.class).getResultList();
+        Session session = entityManager.unwrap(org.hibernate.Session.class);
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Department> query = builder.createQuery(Department.class);
+        Root<Department> root = query.from(Department.class);
+        query.select(root);
+        return session.createQuery(query).getResultList();
     }
 
     @Override

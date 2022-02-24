@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "relatives")
@@ -30,15 +31,19 @@ public class Relative {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
+    @NotNull
     @Column(name = "full_name", nullable = false, columnDefinition = "varchar(100)")
     private String fullName;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @NotNull
     @Column(name = "phone_number", nullable = false, columnDefinition = "varchar(50)")
     private String phoneNumber;
 
+    @NotNull
     @Column(nullable = false, columnDefinition = "varchar(15)")
     @Enumerated(EnumType.STRING)
     private Relationship relationship;

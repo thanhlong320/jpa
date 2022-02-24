@@ -5,6 +5,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @ToString
@@ -17,9 +19,12 @@ public class Department {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
+    @Size(min = 2, max = 20)
     @Column(nullable = false, columnDefinition = "varchar(200)")
     private String name;
 
+    @NotNull
     @Column(name = "start_date")
     private LocalDate startDate;
 
