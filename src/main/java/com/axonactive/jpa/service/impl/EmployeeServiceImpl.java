@@ -9,6 +9,8 @@ import com.axonactive.jpa.service.EmployeeService;
 import com.axonactive.jpa.service.dto.DepartmentStatisticDTO;
 import com.axonactive.jpa.service.dto.EmployeeDTO;
 import com.axonactive.jpa.service.mapper.EmployeeMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -16,6 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import javax.ws.rs.WebApplicationException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,9 @@ import java.util.stream.Collectors;
 @RequestScoped
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
+
+    private static Logger logger = LogManager.getLogger(EmployeeServiceImpl.class);
+
     private static final long YEAR_OLD = 22;
 
     @PersistenceContext(unitName = "jpa")
@@ -39,6 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeDTO> getAllEmployeeByDepartment(int departmentId) {
+        logger.info("Get all employee by department id = " + departmentId + " ....");
         TypedQuery<Employee> namedQuery = entityManager.createNamedQuery(Employee.GET_ALL, Employee.class);
         namedQuery.setParameter("departmentId", departmentId);
         List<Employee> employeeList = namedQuery.getResultList();
@@ -47,6 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDTO getEmployeeById(int departmentId, int employeeId) {
+        logger.info("Get employee by id " + employeeId + " in department id = " + departmentId + " ....");
         return employeeMapper.EmployeeToEmployeeDto(getEmployeeByIdHelper(departmentId, employeeId));
     }
 
@@ -67,6 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void deleteEmployee(int departmentId, int employeeId) {
+        logger.info("Delete employee by id " + employeeId + " in department id = " + departmentId + " ....");
         Employee employee = getEmployeeByIdHelper(departmentId, employeeId);
         if (Objects.nonNull(employee)) {
             entityManager.remove(employee);
@@ -75,12 +84,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDTO updateEmployee(int departmentId, int employeeId, EmployeeRequest employeeRequest) {
-        Employee employee = getEmployeeByIdHelper(departmentId, employeeId);
-        Employee newEmployee = employeeMapper.EmployeeRequestToEmployee(employeeRequest);
-        newEmployee.setId(employee.getId());
-        newEmployee.setDepartment(employee.getDepartment());
-        entityManager.merge(newEmployee);
-        return employeeMapper.EmployeeToEmployeeDto(employee);
+        logger.info("Update employee by id " + employeeId + " in department id = " + departmentId + " ....");
+        try {
+            Employee employee = getEmployeeByIdHelper(departmentId, employeeId);
+            Employee newEmployee = employeeMapper.EmployeeRequestToEmployee(employeeRequest);
+            newEmployee.setId(employee.getId());
+            newEmployee.setDepartment(employee.getDepartment());
+            entityManager.merge(newEmployee);
+            return employeeMapper.EmployeeToEmployeeDto(employee);
+        } catch (Exception e){
+            logger.warn("Update employee by id " + employeeId + " in department id = " + departmentId + " failed");
+            throw new WebApplicationException("Can not update employee by id = " + employeeId);
+        }
     }
 
     @Override
