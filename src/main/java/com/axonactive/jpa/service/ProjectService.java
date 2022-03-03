@@ -8,7 +8,6 @@ import java.util.List;
 public interface ProjectService {
     ProjectDTO getProjectById(int departmentId, int projectId);
 
-
     List<ProjectDTO> getAllProjectByDepartment(int departmentId);
 
     ProjectDTO addProject(int departmentId, ProjectRequest projectRequest);

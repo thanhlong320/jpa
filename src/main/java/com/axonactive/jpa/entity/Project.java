@@ -35,5 +35,4 @@ public class Project {
     @ManyToOne
     @JoinColumn(name = "managed_department", referencedColumnName = "id")
     private Department department;
-
 }
