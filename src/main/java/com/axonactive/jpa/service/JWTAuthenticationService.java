@@ -50,7 +50,6 @@ public class JWTAuthenticationService {
             throw new WebApplicationException(Response.status(400).entity("Invalid request").build());
         }
         String token = parts[1];
-
         String secretKey = AppConfigService.getSecretKey();
         try {
             Algorithm algorithm = Algorithm.HMAC512(secretKey);

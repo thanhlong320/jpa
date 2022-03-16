@@ -23,6 +23,8 @@
         <jackson.version>2.13.1</jackson.version>
         <mysqlConnector.version>8.0.25</mysqlConnector.version>
         <hibernateCore.version>5.5.9.Final</hibernateCore.version>
+        <swagger.version>2.1.1</swagger.version>
+        <jackson.version>2.4.4</jackson.version>
     </properties>
 
     <build>
@@ -93,5 +95,28 @@
             <artifactId>java-jwt</artifactId>
             <version>3.3.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-jaxrs</artifactId>
+            <version>1.5.17</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
     </dependencies>
 </project>
