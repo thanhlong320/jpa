@@ -177,3 +177,5 @@ insert into assignment(id, employee_id, project_id) values(39, 39, 10)
 insert into assignment(id, employee_id, project_id) values(40, 40, 10)
 
 insert into health_insurance(id, code, expiration_date, address, register_place, employee_id) values (1, "BHYT1", "2022-01-01", "17A HCM", "Dong Nai", 1)
+insert into user(id, username, password) values (1, "long", "admin")
+insert into user(id, username, password) values (2, "phat", "admin")

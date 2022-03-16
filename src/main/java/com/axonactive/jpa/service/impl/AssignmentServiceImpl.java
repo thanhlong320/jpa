@@ -4,6 +4,8 @@ import com.axonactive.jpa.controller.request.AssignmentRequest;
 import com.axonactive.jpa.entity.Assignment;
 import com.axonactive.jpa.entity.Employee;
 import com.axonactive.jpa.entity.Project;
+import com.axonactive.jpa.persistence.AbstractCRUDBean;
+import com.axonactive.jpa.persistence.PersistenceService;
 import com.axonactive.jpa.service.AssignmentService;
 import com.axonactive.jpa.service.EmployeeService;
 import com.axonactive.jpa.service.dto.AssignmentDTO;
@@ -20,13 +22,21 @@ import java.util.Objects;
 
 @RequestScoped
 @Transactional
-public class AssignmentServiceImpl implements AssignmentService {
+public class AssignmentServiceImpl extends AbstractCRUDBean<Assignment> implements AssignmentService{
 
     @PersistenceContext(unitName = "jpa")
     EntityManager entityManager;
 
     @Inject
     AssignmentMapper assignmentMapper;
+
+    @Inject
+    private PersistenceService<Assignment> assignmentPersistenceService;
+
+    @Override
+    protected PersistenceService<Assignment> getPersistenceService() {
+        return this.assignmentPersistenceService;
+    }
 
     @Override
     public List<AssignmentDTO> getAssignments() {
@@ -50,7 +60,7 @@ public class AssignmentServiceImpl implements AssignmentService {
         if (Objects.nonNull(employee) && Objects.nonNull(project)) {
             assignment.setEmployee(employee);
             assignment.setProject(project);
-            entityManager.persist(assignment);
+            save(assignment);
         }
         return assignmentMapper.AssignmentToAssignmentDto(assignment);
     }
@@ -59,7 +69,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     public void deleteAssignment(int assignmentId) {
         Assignment assignment = entityManager.find(Assignment.class, assignmentId);
         if (Objects.nonNull(assignment)) {
-            entityManager.remove(assignment);
+            removeEntity(assignment);
         }
     }
 
@@ -73,8 +83,9 @@ public class AssignmentServiceImpl implements AssignmentService {
         if (Objects.nonNull(assignment)) {
             newAssignment.setEmployee(employee);
             newAssignment.setProject(project);
-            entityManager.merge(newAssignment);
+            update(assignment);
         }
         return assignmentMapper.AssignmentToAssignmentDto(newAssignment);
     }
+
 }

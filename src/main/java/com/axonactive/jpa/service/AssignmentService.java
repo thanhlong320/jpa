@@ -1,6 +1,8 @@
 package com.axonactive.jpa.service;
 
 import com.axonactive.jpa.controller.request.AssignmentRequest;
+import com.axonactive.jpa.entity.Assignment;
+import com.axonactive.jpa.persistence.PersistenceService;
 import com.axonactive.jpa.service.dto.AssignmentDTO;
 
 import java.util.List;

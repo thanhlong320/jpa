@@ -3,6 +3,7 @@ package com.axonactive.jpa.controller;
 
 import com.axonactive.jpa.controller.request.AssignmentRequest;
 import com.axonactive.jpa.service.AssignmentService;
+import com.axonactive.jpa.service.JWTAuthenticationService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -12,6 +13,8 @@ import javax.ws.rs.core.Response;
 @Path("/assignments")
 @Produces(MediaType.APPLICATION_JSON)
 public class AssignmentController {
+    @Inject
+    private JWTAuthenticationService jwtAuthenticationService;
 
     @Inject
     private AssignmentService assignmentService;
@@ -23,7 +26,8 @@ public class AssignmentController {
 
     @GET
     @Path("/{id}")
-    public Response getAssignmentById(@PathParam("id") int id){
+    public Response getAssignmentById(@HeaderParam("Authorization") String authorization, @PathParam("id") int id){
+        jwtAuthenticationService.checkAuthorized(authorization);
         return Response.ok(assignmentService.getAssignmentById(id)).build();
     }
 
