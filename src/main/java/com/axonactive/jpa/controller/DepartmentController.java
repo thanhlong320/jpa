@@ -2,6 +2,10 @@ package com.axonactive.jpa.controller;
 
 import com.axonactive.jpa.controller.request.DepartmentRequest;
 import com.axonactive.jpa.service.DepartmentService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -10,12 +14,15 @@ import javax.ws.rs.core.Response;
 
 @Path("departments")
 @Produces(MediaType.APPLICATION_JSON)
+@Api(value = "Department", tags = "ABCDEFGH")
 public class DepartmentController {
 
     @Inject
     private DepartmentService departmentService;
 
     @GET
+    @ApiOperation(value = "Get all department",notes = "Get list of department")
+    @ApiResponses( value = {@ApiResponse(code = 200, message = "Success"),@ApiResponse(code = 404,message = "Not found")})
     public Response getAllDepartments(){
         return Response.ok(departmentService.getAllDepartment()).build();
     }

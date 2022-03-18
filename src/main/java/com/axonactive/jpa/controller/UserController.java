@@ -1,8 +1,8 @@
 package com.axonactive.jpa.controller;
 
 import com.axonactive.jpa.entity.User;
-import com.axonactive.jpa.service.AuthService;
-import com.axonactive.jpa.service.JWTAuthenticationService;
+import com.axonactive.jpa.service.impl.JWTAuthenticationServiceImpl;
+import com.axonactive.jpa.service.dto.Token;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -16,13 +16,13 @@ import javax.ws.rs.core.Response;
 public class UserController {
 
     @Inject
-    private JWTAuthenticationService jwtAuthenticationService;
+    private JWTAuthenticationServiceImpl jwtAuthenticationService;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(User user){
-        String token = jwtAuthenticationService.getToken(user);
+        Token token = jwtAuthenticationService.getToken(user);
         return Response.ok(token).build();
     }
 }
