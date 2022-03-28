@@ -12,4 +12,6 @@ public class ProjectDTO {
     private String name;
     @NotNull
     private String area;
+
+    private DepartmentDTO department;
 }

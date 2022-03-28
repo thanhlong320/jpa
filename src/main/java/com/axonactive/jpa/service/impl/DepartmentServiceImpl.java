@@ -2,13 +2,18 @@ package com.axonactive.jpa.service.impl;
 
 import com.axonactive.jpa.controller.request.DepartmentRequest;
 import com.axonactive.jpa.entity.Department;
+import com.axonactive.jpa.entity.Project;
 import com.axonactive.jpa.service.DepartmentService;
+import com.axonactive.jpa.service.dto.DepartmentDTO;
+import com.axonactive.jpa.service.dto.DepartmentProjectsDTO;
+import com.axonactive.jpa.service.dto.ProjectDTO;
+import com.axonactive.jpa.service.mapper.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -19,7 +24,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.WebApplicationException;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequestScoped
 @Transactional
@@ -29,6 +34,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @PersistenceContext(unitName = "jpa")
     EntityManager entityManager;
+
+    @Inject
+    DepartmentMapper departmentMapper;
+
+    @Inject
+    ProjectMapper projectMapper;
+
 
     @Override
     public Department getDepartmentById(int id) {
@@ -92,5 +104,16 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
     }
 
-
+    @Override
+    public List<DepartmentProjectsDTO> getDepartmentWithProjects() {
+        return entityManager.createQuery("FROM Project", Project.class).getResultList()
+                .stream()
+                .collect(Collectors.groupingBy(Project::getDepartment))
+                .entrySet()
+                .stream().map(entry ->{
+                    DepartmentDTO departmentDTO = departmentMapper.toDTO(entry.getKey());
+                    List<ProjectDTO> projectDTOS = projectMapper.ProjectsToProjectDtos(entry.getValue());
+                    return new DepartmentProjectsDTO(departmentDTO, projectDTOS);
+                }).collect(Collectors.toList());
+    }
 }

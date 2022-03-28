@@ -2,6 +2,7 @@ package com.axonactive.jpa.service;
 
 import com.axonactive.jpa.controller.request.DepartmentRequest;
 import com.axonactive.jpa.entity.Department;
+import com.axonactive.jpa.service.dto.DepartmentProjectsDTO;
 
 import java.util.List;
 
@@ -11,6 +12,5 @@ public interface DepartmentService {
     Department addDepartment(DepartmentRequest departmentRequest);
     void deleteDepartment(int id);
     Department updateDepartment(int id, DepartmentRequest departmentRequest);
-
-
+    List<DepartmentProjectsDTO> getDepartmentWithProjects();
 }

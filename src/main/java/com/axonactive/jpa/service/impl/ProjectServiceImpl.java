@@ -13,8 +13,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @RequestScoped
@@ -78,5 +80,12 @@ public class ProjectServiceImpl implements ProjectService {
         entityManager.merge(project);
 
         return projectMapper.ProjectToProjectDto(project);
+    }
+
+    @Override
+    public List<ProjectDTO> getProjectWithManagedDepartment() {
+        return entityManager.createQuery("FROM Project", Project.class).getResultList()
+                .stream()
+                .map(project -> projectMapper.ProjectToProjectDto(project)).sorted(Comparator.comparing(ProjectDTO::getName)).collect(Collectors.toList());
     }
 }

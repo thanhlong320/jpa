@@ -1,7 +1,6 @@
 package com.axonactive.jpa.controller;
 
-import com.axonactive.jpa.service.EmployeeService;
-import com.axonactive.jpa.service.RelativeService;
+import com.axonactive.jpa.service.*;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -20,6 +19,12 @@ public class CompanyController {
 
     @Inject
     RelativeService relativeService;
+
+    @Inject
+    ProjectService projectService;
+
+    @Inject
+    DepartmentService departmentService;
 
     @GET
     @Path("/employeegroupbydepartment")
@@ -43,4 +48,18 @@ public class CompanyController {
     public Response getEmployeeEmergencyRelative(){
         return Response.ok(relativeService.getEmployeeEmergencyRelative()).build();
     }
+
+
+    @GET
+    @Path("projects")
+    public Response getProjectWithManagedDepartment(){
+        return Response.ok(projectService.getProjectWithManagedDepartment()).build();
+    }
+
+    @GET
+    @Path("department-projects")
+    public Response getDepartmentWithProjects(){
+        return Response.ok(departmentService.getDepartmentWithProjects()).build();
+    }
+
 }
