@@ -15,4 +15,6 @@ public interface ProjectService {
     void deleteProject(int departmentId, int projectId);
 
     ProjectDTO updateProject(int departmentId, int projectId, ProjectRequest projectRequest);
+
+    List<ProjectDTO> getProjectWithManagedDepartment();
 }

@@ -4,6 +4,7 @@ import com.axonactive.jpa.service.CompanyService;
 import com.axonactive.jpa.service.EmployeeService;
 import com.axonactive.jpa.service.RelativeService;
 
+
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -71,4 +72,5 @@ public class CompanyController {
     public Response getEmployeeInOtherDepartmentProject(){
         return Response.ok(companyService.getEmployeeInOtherDepartmentProject()).build();
     }
+
 }
