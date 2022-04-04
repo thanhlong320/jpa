@@ -1,5 +1,6 @@
 package com.axonactive.jpa.controller;
 
+import com.axonactive.jpa.service.CompanyService;
 import com.axonactive.jpa.service.EmployeeService;
 import com.axonactive.jpa.service.RelativeService;
 
@@ -20,6 +21,9 @@ public class CompanyController {
 
     @Inject
     RelativeService relativeService;
+
+    @Inject
+    CompanyService companyService;
 
     @GET
     @Path("/employeegroupbydepartment")
@@ -42,5 +46,29 @@ public class CompanyController {
     @Path("employee-emergency")
     public Response getEmployeeEmergencyRelative(){
         return Response.ok(relativeService.getEmployeeEmergencyRelative()).build();
+    }
+
+    @GET
+    @Path("departmentsprojects")
+    public Response getDepartmentsProjects(){
+        return Response.ok(companyService.getDepartmentsProjects()).build();
+    }
+
+    @GET
+    @Path("projectsdetails")
+    public Response getProjectsDetails(){
+        return Response.ok(companyService.getProjectsDetails()).build();
+    }
+
+    @GET
+    @Path("employeenotinanyproject")
+    public Response getEmployeeNotInAnyProject(){
+        return Response.ok(companyService.getEmployeeNotInAnyProject()).build();
+    }
+
+    @GET
+    @Path("employeeinotherdepartmentproject")
+    public Response getEmployeeInOtherDepartmentProject(){
+        return Response.ok(companyService.getEmployeeInOtherDepartmentProject()).build();
     }
 }

@@ -24,6 +24,9 @@ public class Assignment implements IEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "number_of_hour")
+    private Double numberOfHour;
+
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
