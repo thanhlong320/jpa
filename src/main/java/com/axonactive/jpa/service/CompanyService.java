@@ -1,5 +1,6 @@
 package com.axonactive.jpa.service;
 
+import com.axonactive.jpa.entity.Customer;
 import com.axonactive.jpa.service.dto.DepartmentDTO;
 import com.axonactive.jpa.service.dto.EmployeeDTO;
 import com.axonactive.jpa.service.dto.ProjectDTO;
@@ -15,4 +16,6 @@ public interface CompanyService {
     List<EmployeeDTO> getEmployeeNotInAnyProject();
 
     List<EmployeeDTO> getEmployeeInOtherDepartmentProject();
+
+    List<Customer> getCustomers();
 }

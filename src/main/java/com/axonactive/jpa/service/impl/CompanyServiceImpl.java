@@ -1,6 +1,7 @@
 package com.axonactive.jpa.service.impl;
 
 import com.axonactive.jpa.entity.Assignment;
+import com.axonactive.jpa.entity.Customer;
 import com.axonactive.jpa.entity.Employee;
 import com.axonactive.jpa.entity.Project;
 import com.axonactive.jpa.service.CompanyService;
@@ -94,5 +95,10 @@ public class CompanyServiceImpl implements CompanyService {
                 )
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList()));
+    }
+
+    @Override
+    public List<Customer> getCustomers() {
+        return entityManager.createQuery("From Customer", Customer.class).getResultList();
     }
 }

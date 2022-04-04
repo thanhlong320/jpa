@@ -73,4 +73,10 @@ public class CompanyController {
         return Response.ok(companyService.getEmployeeInOtherDepartmentProject()).build();
     }
 
+    @GET
+    @Path("customers")
+    public Response getCustomerInfo(){
+        return Response.ok(companyService.getCustomers()).build();
+    }
+
 }
