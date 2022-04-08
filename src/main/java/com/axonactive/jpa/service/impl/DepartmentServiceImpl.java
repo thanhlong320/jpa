@@ -41,7 +41,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Inject
     ProjectMapper projectMapper;
 
-
     @Override
     public Department getDepartmentById(int id) {
         logger.info("Get departmen by id = " + id + " ....");

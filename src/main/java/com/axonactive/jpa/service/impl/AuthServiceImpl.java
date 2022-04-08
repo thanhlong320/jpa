@@ -3,6 +3,7 @@ package com.axonactive.jpa.service.impl;
 import com.axonactive.jpa.entity.User;
 import com.axonactive.jpa.service.AuthService;
 
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -11,6 +12,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.util.Objects;
 
+@RequestScoped
 public class AuthServiceImpl implements AuthService {
     @PersistenceContext(unitName = "jpa")
     private EntityManager entityManager;

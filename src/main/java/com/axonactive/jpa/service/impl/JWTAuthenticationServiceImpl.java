@@ -10,7 +10,9 @@ import com.axonactive.jpa.service.AuthService;
 import com.axonactive.jpa.service.JWTAuthenticationService;
 import com.axonactive.jpa.service.dto.Token;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
@@ -18,6 +20,8 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
+@RequestScoped
+@Transactional
 public class JWTAuthenticationServiceImpl implements JWTAuthenticationService {
 
     @Inject
