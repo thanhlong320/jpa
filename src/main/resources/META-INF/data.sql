@@ -134,6 +134,7 @@ insert into project(id, area, name, managed_department) values(17, "Vietnam", "P
 insert into project(id, area, name, managed_department) values(18, "Vietnam", "Project_18", 9)
 insert into project(id, area, name, managed_department) values(19, "Vietnam", "Project_19", 10)
 insert into project(id, area, name, managed_department) values(20, "Vietnam", "Project_20", 10)
+insert into project(id, area, name, managed_department) values(21, "Vietnam", "Project_20", 1)
 
 insert into assignment(id, employee_id, project_id, number_of_hour) values(1, 1, 1, 10)
 insert into assignment(id, employee_id, project_id, number_of_hour) values(2, 2, 1, 4)

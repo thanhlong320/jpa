@@ -1,5 +1,6 @@
 //package com.axonactive.jpa.controller;
 //
+//import com.axonactive.jpa.controller.request.DepartmentRequest;
 //import org.jboss.arquillian.container.test.api.Deployment;
 //import org.jboss.arquillian.container.test.api.RunAsClient;
 //import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource;
@@ -58,7 +59,30 @@
 //
 //        //        When
 //        final Response response = invocation.invoke();
-//        System.out.println(response.getEntity());
+//        System.out.println("response: " + response.getEntity());
+//
+//        //        Then
+//        assertEquals(deploymentURL + "api/departments", webTarget.getUri().toASCIIString());
+//        assertEquals(MediaType.APPLICATION_JSON, response.getMediaType().toString());
+//        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+//    }
+//
+//    @Test
+//    @RunAsClient
+//    public void addDepartment(@ArquillianResteasyResource("api/departments") ResteasyWebTarget webTarget)
+//    {
+//        //        Given
+//        final Invocation.Builder invocationBuilder = webTarget.request();
+//        invocationBuilder.acceptEncoding("UTF-8");
+//        invocationBuilder.accept(MediaType.APPLICATION_JSON);
+//        final Invocation invocation = invocationBuilder.buildPost(Entity.entity("{\n" +
+//                "\"name\": \"NEW DEPARTMENT---16\",\n" +
+//                "\"startDate\": \"16/03/2022\"\n" +
+//                "}", MediaType.APPLICATION_JSON_TYPE));
+//
+//        //        When
+//        final Response response = invocation.invoke();
+//
 //        //        Then
 //        assertEquals(deploymentURL + "api/departments", webTarget.getUri().toASCIIString());
 //        assertEquals(MediaType.APPLICATION_JSON, response.getMediaType().toString());

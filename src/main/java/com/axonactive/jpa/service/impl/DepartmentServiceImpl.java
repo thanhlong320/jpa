@@ -8,8 +8,6 @@ import com.axonactive.jpa.service.dto.DepartmentDTO;
 import com.axonactive.jpa.service.dto.DepartmentProjectsDTO;
 import com.axonactive.jpa.service.dto.ProjectDTO;
 import com.axonactive.jpa.service.mapper.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 
 import javax.enterprise.context.RequestScoped;
@@ -30,8 +28,6 @@ import java.util.stream.Collectors;
 @Transactional
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private static Logger logger = LogManager.getLogger(DepartmentServiceImpl.class);
-
     @PersistenceContext(unitName = "jpa")
     EntityManager entityManager;
 
@@ -43,7 +39,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department getDepartmentById(int id) {
-        logger.info("Get departmen by id = " + id + " ....");
         Session session = entityManager.unwrap(org.hibernate.Session.class);
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Department> query = builder.createQuery(Department.class);
@@ -53,14 +48,12 @@ public class DepartmentServiceImpl implements DepartmentService {
         try {
             return session.createQuery(query).getSingleResult();
         } catch (Exception e){
-            logger.warn("Get department by id = " + id + " failed");
             throw new WebApplicationException("Can not find department by id = " + id);
         }
     }
 
     @Override
     public List<Department> getAllDepartment() {
-        logger.info("Get all department....");
         Session session = entityManager.unwrap(org.hibernate.Session.class);
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Department> query = builder.createQuery(Department.class);
@@ -84,7 +77,6 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (Objects.nonNull(department)) {
             entityManager.remove(department);
         } else{
-            logger.warn("Delete department by id = " + id + " failed");
             throw new WebApplicationException("Can not delete department by id = " + id);
         }
     }
@@ -98,7 +90,6 @@ public class DepartmentServiceImpl implements DepartmentService {
             entityManager.merge(department);
             return department;
         } catch (Exception e ){
-            logger.warn("Update department by id = " + id + " failed");
             throw new WebApplicationException("Can not update department by id = " + id);
         }
     }
